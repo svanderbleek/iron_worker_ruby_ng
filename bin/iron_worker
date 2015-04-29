@@ -45,7 +45,7 @@ if $*.size == 1 && ($*[0] == '-v' || $*[0] == '--version')
   exit 0
 end
 
-commands = ['upload', 'patch', 'queue', 'retry', 'schedule', 'update', 'log', 'run', 'install', 'webhook', 'info', 'stacks', 'pause', 'resume']
+commands = ['upload', 'patch', 'queue', 'retry', 'schedule', 'update', 'log', 'run', 'install', 'webhook', 'info', 'stacks', 'codes', 'pause', 'resume']
 
 if $*.size == 0 || (not commands.include?($*[0]))
   puts 'usage: iron_worker COMMAND [OPTIONS]'
@@ -470,6 +470,15 @@ elsif command == 'info'
 
 elsif command == 'stacks'
   @cli.stacks_list
+elsif command == 'codes'
+  action = $*.shift
+
+  if action
+    id = $*.shift
+    @cli.send("codes_#{action}", id)
+  else
+    @cli.codes_list
+  end
 elsif command == 'update'
   entities = ['schedule']
 

@@ -78,6 +78,23 @@ module IronWorkerNG
       puts client.stacks_list.map{ |stack| "* #{stack}" }.join("\n")
     end
 
+    def codes_list
+      client
+      log_group "List of codes"
+      puts client.codes_list.map{ |code| "* #{code.id}" }.join("\n")
+    end
+
+    def codes_delete(id)
+      client
+      log "Deleting code #{id}"
+      deleted =client.codes_delete(id)
+      if deleted
+        log "Delete complete"
+      else
+        log "Delete failed"
+      end
+    end
+
     def upload(name, params, options)
       client
 
